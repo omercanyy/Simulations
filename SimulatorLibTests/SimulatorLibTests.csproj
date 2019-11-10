@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Simulators\SimulatorLib.csproj" />
+    <ProjectReference Include="..\SimulatorLib\SimulatorLib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -51,7 +51,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simulators\SimulatorLib.csproj">
+    <ProjectReference Include="..\SimulatorLib\SimulatorLib.csproj">
       <Project>{afc14d9e-f229-4454-97c0-8beb29fe185d}</Project>
       <Name>SimulatorLib</Name>
     </ProjectReference>
