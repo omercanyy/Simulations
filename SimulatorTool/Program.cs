@@ -1,5 +1,5 @@
 ﻿using System;
-using Simulators;
+using SimulatorLib;
 
 namespace SimulatorTool
 {
@@ -15,7 +15,9 @@ namespace SimulatorTool
         public static void Main(string[] args)
         {
             var firstArg = args.Length > 0 ? args[0] : null;
+            firstArg = "ExtinctionSimulator";
             var secondArg = args.Length > 1 ? args[1] : null;
+            secondArg = @"C:\Users\izmir\Desktop\demo.csv";
             var thirdArg = args.Length > 1 ? args[2] : null;
 
             if (Enum.TryParse(firstArg, out Simulators simulatorName))

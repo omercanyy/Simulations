@@ -1,19 +1,25 @@
 ﻿using System;
 
-namespace Simulators
+namespace SimulatorLib
 {
     /// <summary>
     /// Simulates how a virus epidemic kill cities in a country
     /// </summary>
     public class ExtinctionSimulator: ISimulator
     {
-        private int[] _country;
+        public int[] Country { get; private set; }
 
-        private int _yearsPassed;
+        public int YearsPassed { get; private set; }
 
         public ExtinctionSimulator(int[] countries)
         {
-            this._country = countries;
+            if (countries == null || countries.Length == 0)
+            {
+                throw new ArgumentException("Country cannot be empty or null!");
+            }
+
+            this.Country = countries;
+            YearsPassed = 0;
         }
 
         /// <summary>
@@ -21,16 +27,12 @@ namespace Simulators
         /// </summary>
         public void Run()
         {
-            //TODO: Implement proper formating for pretty-print
-            _yearsPassed = 0;
-            Console.WriteLine($"year {_yearsPassed}: {string.Join(", ", _country)}");
+            PrintCurrentState();
             while (IsAnyoneAlive())
             {
                 IterateOneYear();
-                _yearsPassed++;
-                Console.WriteLine($"year {_yearsPassed}: {string.Join(", ", _country)}");
+                PrintCurrentState();
             }
-            Console.WriteLine("__!!!EXTINCT!!!__");
         }
 
         /// <summary>
@@ -38,27 +40,20 @@ namespace Simulators
         /// </summary>
         public void IterateOneYear()
         {
-            for (int i = 0; i < _country.Length; i++)
+            var nextYearsCountry = new int[Country.Length];
+            for (int i = 0; i < Country.Length; i++)
             {
-                //skip if city is already dead
-                if (_country[i] == 0)
-                {
-                    continue;
-                }
-
                 if (isNeighborToVirus(i))
                 {
-                    _country[i] = _country[i] / 2;
+                    nextYearsCountry[i] = Country[i] / 2;
+                }
+                else
+                {
+                    nextYearsCountry[i] = Country[i];
                 }
             }
-        }
-
-        /// <summary>
-        /// Get how many years passed since simulation started
-        /// </summary>
-        public int GetYearsPassed()
-        {
-            return _yearsPassed;
+            Country = nextYearsCountry;
+            YearsPassed++;
         }
 
         /// <summary>
@@ -66,7 +61,7 @@ namespace Simulators
         /// </summary>
         public bool IsAnyoneAlive()
         {
-            foreach(var city in _country)
+            foreach(var city in Country)
             {
                 if (city > 0)
                 {
@@ -76,14 +71,23 @@ namespace Simulators
             return false;
         }
 
+        public void PrintCurrentState()
+        {
+            Console.WriteLine($"year {YearsPassed}: {string.Join(", ", Country)}");
+            if (!IsAnyoneAlive())
+            {
+                Console.WriteLine("__!!!EXTINCT!!!__");
+            }
+        }
+
         //Checks (by city's index) if a city has contacted the virus
         private bool isNeighborToVirus(int i)
         {
             if (i == 0)
-                return _country[i + 1] == 0;
-            if (i == _country.Length - 1)
-                return _country[i - 1] == 0;
-            return _country[i - 1] == 0 || _country[i + 1] == 0;
+                return Country[i + 1] == 0;
+            if (i == Country.Length - 1)
+                return Country[i - 1] == 0;
+            return Country[i - 1] == 0 || Country[i + 1] == 0;
         }
     }
 }

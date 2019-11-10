@@ -1,4 +1,4 @@
-﻿namespace Simulators
+﻿namespace SimulatorLib
 {
     interface ISimulator
     {
