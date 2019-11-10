@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Simulators
+namespace SimulatorLib
 {
     /// <summary>
     /// Simulates distribution of given number of coins being thrown for a given number of times
     /// </summary>
     public class CoinThrowDistributionSimulator : ISimulator
     {
+        private const string _head = "Head";
+
+        private const string _tail = "Tail";
+
+        private const char _separator = '|';
+
         private int _numberOfCoins;
 
         private int _numberOfThrows;
 
         private Random _random;
 
-        private readonly string _head = "Head";
-
-        private readonly string _tail = "Tail";
-
-        private readonly char _separator = '|';
-
         public CoinThrowDistributionSimulator(int NumberOfCoins, int NumberOfThrows)
         {
             this._numberOfCoins = NumberOfCoins;
             this._numberOfThrows = NumberOfThrows;
-            this._random = new Random();
+            this._random = new Random(42);
         }
 
         /// <summary>
